@@ -1,0 +1,69 @@
+<canvas id="ctx" width="500" height="500" style="border:1px solid #000000;">
+</canvas>
+<script>
+    var ctx = document.getElementById("ctx").getContext("2d");
+    ctx.font = '30px Arial';
+
+    var WIDTH = 500;
+    var HEIGHT = 500;
+
+
+    // array [] ordered list (ordered important and/or no id)
+
+    // object {} key:value (order not important and/or and unique id)
+
+    var player = {
+        name: 'P',
+        message: 'Player Bouncing',
+        x: 50,
+        y: 50,
+        spdX: 40,
+        spdY: 5,
+    };
+    var enemy = {
+        name: 'E',
+        message: 'Enemy Bouncing',
+        x: 150,
+        y: 500,
+        spdX: 40,
+        spdY: 5,
+    };
+    var enemy2 = {
+        name: '1',
+        message: 'Enemy Bouncing',
+        x: 495,
+        y: 6,
+        spdX: 40,
+        spdY: 5,
+    };
+
+
+    setInterval(update, 50); // setInterval (name of function, time in ms)
+
+
+    function updateEntity(something) {
+        ctx.fillText(something.name, something.x, something.y);
+        something.x += something.spdX;
+        something.y += something.spdY;
+
+        if (something.x < 0 || something.x > WIDTH) {
+            something.spdX *= -1;
+            console.log(something.message);
+        }
+
+        if (something.y < 0 || something.y > HEIGHT) {
+            something.spdY *= -1;
+            console.log(something.message);
+        }
+
+    }
+
+    function update() {
+        ctx.clearRect(0, 0, WIDTH, HEIGHT);
+        updateEntity(player);
+        updateEntity(enemy);
+        updateEntity(enemy2);
+
+
+    }
+</script>

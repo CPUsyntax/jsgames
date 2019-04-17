@@ -1,0 +1,114 @@
+<canvas id="ctx" width="500" height="500" style="border:1px solid #000000;">
+</canvas>
+<script>
+    var ctx = document.getElementById("ctx").getContext("2d");
+    ctx.font = '30px Arial';
+    // ctx.fillStyle = 'red'; // color of text
+    // ctx.globalAlpha = 0.5; // Transparency 0 = inviso, 1 = visible
+
+    var WIDTH = 500;
+    var HEIGHT = 500;
+
+    // player
+    /* non object
+    var name = 'P';
+    var message = 'Bouncing';
+    var x = 50;
+    var spdX = 40;
+    var y = 50;
+    var spdY = 5;
+    */
+
+    //enemy 
+    /* non object
+    var enemy_name = 'E';
+    var enemy_message = 'Enemy Bouncing';
+    var enemy_x = 150;
+    var enemy_spdX = 40;
+    var enemy_y = 500;
+    var enemy_spdY = 5;
+    */
+
+    /*
+    Declare objects 1st option:
+    var enemy = {};
+        enemy.name = 'E';
+        enemy.message = 'Enemy Bouncing';
+        enemy.x = 150;
+        enemy.y = 500;
+        enemy.spdX = 40;
+        enemy.spdY = 5;
+    */
+    // 2nd option:
+    var player = {
+        name: 'M',
+        message: 'Player Bouncing',
+        x: 50,
+        y: 50,
+        spdX: 40,
+        spdY: 5,
+    };
+    var enemy = {
+        name: 'O',
+        message: 'Enemy Bouncing',
+        x: 150,
+        y: 500,
+        spdX: 40,
+        spdY: 5,
+    };
+
+    /*
+        enemy.x
+        same as
+        enemy['x']
+        same as
+
+        var myString = 'x';
+        enemy[myString]
+    */
+
+    setInterval(update, 50); // setInterval (name of function, time in ms)
+
+    function update() {
+        //player
+        ctx.fillText(player.name, player.x, player.y);
+        player.x += player.spdX;
+        player.y += player.spdY;
+        //ctx.globalAlpha = 0.0;
+        //ctx.fillText('P', x, y);
+
+        if (player.x < 0 || player.x > WIDTH) {
+            player.spdX *= -1;
+            console.log(player.message);
+        }
+
+        if (player.y < 0 || player.y > HEIGHT) {
+            player.spdY *= -1;
+            console.log(player.message);
+        }
+        //enemy 
+        ctx.fillText(enemy.name, enemy.x, enemy.y);
+        enemy.x += enemy.spdX;
+        enemy.y += enemy.spdY;
+        //ctx.globalAlpha = 0.0;
+        //ctx.fillText('P', x, y);
+
+        if (enemy.x < 0 || enemy.x > WIDTH) {
+            enemy.spdX *= -1;
+            console.log(enemy.message);
+        }
+
+        if (enemy.y < 0 || enemy.y > HEIGHT) {
+            enemy.spdY *= -1;
+            console.log(enemy.message);
+        }
+
+    }
+
+
+
+    //update();
+
+
+    // ctx.fillText("Hello", y, y);
+</script>

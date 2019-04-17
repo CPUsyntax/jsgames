@@ -1,0 +1,69 @@
+<canvas id="ctx" width="500" height="500" style="border:1px solid #000000;">
+</canvas>
+<script>
+    var ctx = document.getElementById("ctx").getContext("2d");
+    ctx.font = '30px Arial';
+    // ctx.fillStyle = 'red'; // color of text
+    // ctx.globalAlpha = 0.5; // Transparency 0 = inviso, 1 = visible
+
+    var WIDTH = 500;
+    var HEIGHT = 500;
+    // player
+    var name = 'P';
+    var message = 'Bouncing';
+    var x = 50;
+    var spdX = 40;
+    var y = 50;
+    var spdY = 5;
+    //enemy 
+    var enemy_name = 'E';
+    var enemy_message = 'Bouncing';
+    var enemy_x = 150;
+    var enemy_spdX = 40;
+    var enemy_y = 500;
+    var enemy_spdY = 5;
+
+    setInterval(update, 50); // setInterval (name of function, time in ms)
+
+    function update() {
+        ctx.fillText(name, x, y);
+        x += spdX;
+        y += spdY;
+        //ctx.globalAlpha = 0.0;
+        //ctx.fillText('P', x, y);
+
+        if (x < 0 || x > WIDTH) {
+            spdX *= -1;
+            console.log(message);
+        }
+
+        if (y < 0 || y > HEIGHT) {
+            spdY *= -1;
+            console.log(message);
+        }
+        //enemy 
+        ctx.fillText(enemy_name, enemy_x, enemy_y);
+        enemy_x += enemy_spdX;
+        enemy_y += enemy_spdY;
+        //ctx.globalAlpha = 0.0;
+        //ctx.fillText('P', x, y);
+
+        if (enemy_x < 0 || enemy_x > WIDTH) {
+            enemy_spdX *= -1;
+            console.log(enemy_message);
+        }
+
+        if (enemy_y < 0 || enemy_y > HEIGHT) {
+            enemy_spdY *= -1;
+            console.log(enemy_message);
+        }
+
+    }
+
+
+
+    //update();
+
+
+    // ctx.fillText("Hello", y, y);
+</script>

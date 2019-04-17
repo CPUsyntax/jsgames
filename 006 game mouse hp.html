@@ -1,0 +1,126 @@
+<canvas id="ctx" width="500" height="500" style="border:1px solid #000000;">
+</canvas>
+<script>
+    var ctx = document.getElementById("ctx").getContext("2d");
+    ctx.font = '30px Arial';
+
+    var WIDTH = 500;
+    var HEIGHT = 500;
+    var timeWhenGameStarted = Date.now();
+
+
+    // array [] ordered list (ordered important and/or no id)
+
+    // object {} key:value (order not important and/or and unique id)
+
+    var player = {
+        name: 'P',
+        message: 'Player Bouncing',
+        x: 50,
+        y: 50,
+        spdX: 40,
+        spdY: 5,
+        hp: 10,
+    };
+
+    var enemyList = {};
+
+
+
+
+    getDistanceBetweenEntity = function (entity1, entity2) { // return distance (number)
+        var vx = entity1.x - entity2.x;
+        var vy = entity1.y - entity2.y;
+        return Math.sqrt(vx * vx + vy * vy);
+
+    }
+
+
+    testCollisonEntity = function (entity1, entity2) { // return if colliding (true/false)
+        var distance = getDistanceBetweenEntity(entity1, entity2);
+        return distance < 30;
+
+    }
+
+    Enemy = function (id, x, y, spdX, spdY) {
+        var enemy = {
+            name: 'E',
+            message: 'Enemy Bouncing',
+            x: x,
+            y: y,
+            spdX: spdX,
+            spdY: spdY,
+            id: id,
+        };
+        enemyList[id] = enemy;
+    }
+
+    // CANNOT ask the browser where the mouse import
+    // CAN ask the browser where the mouse is when the mouse moves
+
+    document.onmousemove = function (mouse) {
+        var mouseX = mouse.clientX;
+        var mouseY = mouse.clientY;
+
+        player.x = mouseX;
+        player.y = mouseY;
+    }
+
+
+
+    updateEntity = function (something) {
+        updateEntityPosition(something);
+        drawEntity(something);
+
+    }
+    drawEntity = function (something) {
+        ctx.fillText(something.name, something.x, something.y);
+        ctx.fillText('Player HP: ' + player.hp, 0, 30);
+
+    }
+
+    updateEntityPosition = function (something) {
+        something.x += something.spdX;
+        something.y += something.spdY;
+
+        if (something.x < 0 || something.x > WIDTH) {
+            something.spdX *= -1;
+            console.log(something.message);
+        }
+
+        if (something.y < 0 || something.y > HEIGHT) {
+            something.spdY *= -1;
+            console.log(something.message);
+        }
+
+    }
+
+    update = function () {
+        ctx.clearRect(0, 0, WIDTH, HEIGHT);
+
+        drawEntity(player);
+        for (var key in enemyList) {
+            updateEntity(enemyList[key]);
+
+            var isColliding = testCollisonEntity(player, enemyList[key])
+            if (isColliding) {
+                player.hp--;
+                console.log('Colliding. Player HP: ' + player.hp);
+                if (player.hp <= 0) {
+                    var timeSurvived = Date.now() - timeWhenGameStarted;
+                    console.log("You lost! You survived for " + timeSurvived / 1000 + " seconds.");
+                    timeWhenGameStarted = Date.now();
+                    player.hp = 10;
+                }
+            }
+        }
+    }
+
+
+    Enemy('E0', 50, 350, 10, 15);
+    Enemy('E1', 150, 350, 10, 15);
+    Enemy('E2', 250, 350, 10, -15);
+    Enemy('E3', 250, 150, 10, -8);
+
+    setInterval(update, 50); // setInterval (name of function, time in ms)
+</script>
